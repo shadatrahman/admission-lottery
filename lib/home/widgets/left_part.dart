@@ -96,14 +96,14 @@ class _LeftPartState extends State<LeftPart> {
                           value: 3,
                           child: Text('3', style: TextStyle(fontSize: 16.sp)),
                         ),
-                        DropdownMenuItem(
-                          value: 6,
-                          child: Text('6', style: TextStyle(fontSize: 16.sp)),
-                        ),
-                        DropdownMenuItem(
-                          value: 9,
-                          child: Text('9', style: TextStyle(fontSize: 16.sp)),
-                        ),
+                        // DropdownMenuItem(
+                        //   value: 6,
+                        //   child: Text('6', style: TextStyle(fontSize: 16.sp)),
+                        // ),
+                        // DropdownMenuItem(
+                        //   value: 9,
+                        //   child: Text('9', style: TextStyle(fontSize: 16.sp)),
+                        // ),
                       ],
                       onChanged: (v) {
                         controller.selectedClass.value = v as int;
