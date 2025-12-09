@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:admission_lottery/home/controllers/draw_controller.dart';
 import 'package:admission_lottery/main.dart';
 import 'package:admission_lottery/models/student_model.dart';
@@ -22,6 +23,7 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
   Timer? revealTimer;
   final ScrollController _scrollController = ScrollController();
   bool _hasScrolledToMax = false;
+  final Random _random = Random();
 
   // Define all quota types in order
   final List<QuotaData> quotaTypes = [
@@ -66,32 +68,43 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
   }
 
   void _startRevealSequence() {
-    // Wait 2 seconds before showing first column, then reveal each subsequent column every 2 seconds
-    Future.delayed(const Duration(seconds: 2), () {
+    _revealNextColumn(1);
+  }
+
+  void _revealNextColumn(int nextColumnIndex) {
+    if (!mounted || nextColumnIndex > quotaTypes.length) {
+      return;
+    }
+
+    // Get delay duration based on column index
+    final delaySeconds = _getDelayForColumn(nextColumnIndex);
+
+    Future.delayed(Duration(seconds: delaySeconds), () {
       if (mounted) {
         setState(() {
-          visibleColumnsCount = 1;
-        });
+          visibleColumnsCount = nextColumnIndex;
 
-        // Continue revealing remaining columns every 2 seconds
-        revealTimer = Timer.periodic(const Duration(seconds: 2), (timer) {
-          if (mounted) {
-            setState(() {
-              if (visibleColumnsCount < quotaTypes.length) {
-                visibleColumnsCount++;
-
-                // When 6 columns are visible (2 columns left), scroll to max extent
-                if (visibleColumnsCount == 6 && !_hasScrolledToMax) {
-                  _scrollToMaxExtent();
-                }
-              } else {
-                timer.cancel();
-              }
-            });
+          // When 6 columns are visible (2 columns left), scroll to max extent
+          if (visibleColumnsCount == 6 && !_hasScrolledToMax) {
+            _scrollToMaxExtent();
           }
         });
+
+        // Continue to next column
+        if (nextColumnIndex < quotaTypes.length) {
+          _revealNextColumn(nextColumnIndex + 1);
+        }
       }
     });
+  }
+
+  int _getDelayForColumn(int columnIndex) {
+    // 3rd column (index 3) and 8th column (index 8) should load for 15 seconds
+    if (columnIndex == 3 || columnIndex == 8) {
+      return 15;
+    }
+    // All other columns: random between 3-8 seconds
+    return 3 + _random.nextInt(6); // 3 + (0-5) = 3-8 seconds
   }
 
   void _scrollToMaxExtent() {
