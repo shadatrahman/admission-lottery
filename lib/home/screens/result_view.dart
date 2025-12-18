@@ -145,6 +145,8 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
           ),
         ),
         centerTitle: false,
+        titleSpacing: 0,
+        leadingWidth: 56,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
@@ -161,6 +163,41 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
             },
           ),
         ],
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(70.h),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 80.w, vertical: 10.h),
+            child: Obx(
+              () => Row(
+                children: [
+                  Expanded(
+                    child: _buildInfoChip(
+                      icon: Icons.class_,
+                      label: 'Class',
+                      value: '${drawcontroller.homeController.selectedClass.value}',
+                    ),
+                  ),
+                  SizedBox(width: 12.w),
+                  Expanded(
+                    child: _buildInfoChip(
+                      icon: Icons.access_time,
+                      label: 'Shift',
+                      value: drawcontroller.homeController.shift.value,
+                    ),
+                  ),
+                  SizedBox(width: 12.w),
+                  Expanded(
+                    child: _buildInfoChip(
+                      icon: Icons.language,
+                      label: 'Version',
+                      value: drawcontroller.homeController.version.value,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.all(20.sp),
@@ -352,6 +389,83 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
                   ),
                 ],
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoChip({
+    required IconData icon,
+    required String label,
+    required String value,
+  }) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Colors.white.withValues(alpha: 0.25),
+            Colors.white.withValues(alpha: 0.15),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.4),
+          width: 2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: EdgeInsets.all(8.sp),
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.3),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              icon,
+              color: Colors.white,
+              size: 22.sp,
+            ),
+          ),
+          SizedBox(width: 12.w),
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: Colors.white.withValues(alpha: 0.85),
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                SizedBox(height: 2.h),
+                Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

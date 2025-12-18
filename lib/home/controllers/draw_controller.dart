@@ -228,6 +228,12 @@ class DrawController extends GetxController {
     final excel = Excel.createExcel();
     Sheet sheetObject = excel['Sheet1'];
 
+    // Add class, shift, and version information
+    sheetObject.appendRow([TextCellValue('Class: ${homeController.selectedClass.value}')]);
+    sheetObject.appendRow([TextCellValue('Shift: ${homeController.shift.value}')]);
+    sheetObject.appendRow([TextCellValue('Version: ${homeController.version.value}')]);
+    sheetObject.appendRow([TextCellValue('')]); // Empty row for spacing
+
     sheetObject.appendRow([TextCellValue('Freedom Fighter Quota: (${fqAdmittedStudents.length})')]);
     for (int i = 0; i < fqAdmittedStudents.length; i++) {
       sheetObject.appendRow([TextCellValue(fqAdmittedStudents[i].roll ?? '')]);
@@ -310,6 +316,27 @@ class DrawController extends GetxController {
           return pw.Column(
             children: [
               pw.Center(child: pw.Image(image)),
+              pw.SizedBox(height: 10),
+              // Add class, shift, and version information
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.center,
+                children: [
+                  pw.Text(
+                    'Class: ${homeController.selectedClass.value}',
+                    style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold),
+                  ),
+                  pw.SizedBox(width: 20),
+                  pw.Text(
+                    'Shift: ${homeController.shift.value}',
+                    style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold),
+                  ),
+                  pw.SizedBox(width: 20),
+                  pw.Text(
+                    'Version: ${homeController.version.value}',
+                    style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold),
+                  ),
+                ],
+              ),
               pw.SizedBox(height: 10),
               pw.Table(
                 border: pw.TableBorder.all(),
