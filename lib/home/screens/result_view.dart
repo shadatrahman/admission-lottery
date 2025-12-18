@@ -166,7 +166,7 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(70.h),
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 80.w, vertical: 10.h),
+            padding: EdgeInsets.symmetric(horizontal: 300.w, vertical: 10.h),
             child: Obx(
               () => Row(
                 children: [
@@ -441,31 +441,23 @@ class _ResultViewState extends State<ResultView> with TickerProviderStateMixin {
             ),
           ),
           SizedBox(width: 12.w),
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    color: Colors.white.withValues(alpha: 0.85),
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-                SizedBox(height: 2.h),
-                Text(
-                  value,
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.5,
-                  ),
-                ),
-              ],
+          Text(
+            '$label: ',
+            style: TextStyle(
+              fontSize: 18.sp,
+              color: Colors.white.withValues(alpha: 0.85),
+              fontWeight: FontWeight.w500,
+              letterSpacing: 0.5,
+            ),
+          ),
+          SizedBox(width: 2.w),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 18.sp,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.5,
             ),
           ),
         ],
